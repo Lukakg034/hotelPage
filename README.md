@@ -1,0 +1,2 @@
+# hotelPage
+Single hotel webpage
