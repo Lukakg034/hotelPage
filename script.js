@@ -9,6 +9,33 @@ function toTop() {
   document.documentElement.scrollTop = 0;
 }
 
+// Hamburger
+
+const hamburger = document.querySelector(".hamburger");
+const navListContainer = document.querySelector(".nav-list-container");
+
+hamburger.addEventListener("click", () => {
+  hamburger.classList.toggle("active");
+  navListContainer.classList.toggle("active");
+});
+
+// Close mobile navigation on click
+
+navListContainer.addEventListener("click", () => {
+  if (hamburger.classList.contains("active")) {
+    hamburger.classList.remove("active");
+    navListContainer.classList.remove("active");
+  }
+});
+// Close mobile navigation on arrow click
+
+toTopArrow.addEventListener("click", () => {
+  if (hamburger.classList.contains("active")) {
+    hamburger.classList.remove("active");
+    navListContainer.classList.remove("active");
+  }
+});
+
 // Image modal window
 
 const roomImages = [...document.querySelectorAll(".room-images")];
@@ -24,6 +51,7 @@ roomImages.forEach((image, imageCounter) => {
     popup.classList.add("overlay");
   });
 });
+
 // Popup image on click
 const updateImage = (imageCounter) => {
   let path = `img/Rooms/room-${imageCounter + 1}.jpg`;
@@ -38,4 +66,48 @@ const closePopup = function () {
 };
 popup.addEventListener("click", closePopup);
 
-// TODO Room gallery overlay function with closing popup
+// Listener with intersection of hamburger and section
+
+const sectionHotelRooms = document.querySelector("#hotel-rooms");
+const sectionServices = document.querySelector("#services");
+const footerSection = document.querySelector("#footer");
+const hamburgerLines = document.querySelectorAll(".hamburger-line");
+const hamLine = hamburgerLines[(0, 1, 2)];
+const hotelSectionOptions = {};
+const servicesSectionOptions = {};
+
+if (hamburger.classList.contains("active")) {
+  hamburgerLines.forEach((ha) => {
+    ha.style.backgroundColor = "#e5ba73";
+  });
+}
+const checkIntersection = () => {
+  const hamburgerRect = hamburger.getBoundingClientRect();
+  console.log(hamburgerRect);
+  const sectionRect = sectionHotelRooms.getBoundingClientRect();
+  console.log(sectionRect);
+
+  const isIntersecting = !(
+    hamburgerRect.right < sectionRect.left ||
+    hamburgerRect.left > sectionRect.right ||
+    hamburgerRect.bottom < sectionRect.top ||
+    hamburgerRect.top > sectionRect.bottom
+  );
+
+  if (isIntersecting) {
+    hamburgerLines.forEach((ha) => {
+      ha.style.backgroundColor = "#e5ba73";
+    });
+  } else {
+    if (hamburger.classList.contains("active")) {
+      hamburgerLines.forEach((ha) => {
+        ha.style.backgroundColor = "#e5ba73";
+      });
+    } else if (!hamburger.classList.contains("active")) {
+      hamburgerLines.forEach((ha) => {
+        ha.style.backgroundColor = "black";
+      });
+    }
+  }
+};
+window.addEventListener("scroll", checkIntersection);
