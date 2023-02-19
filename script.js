@@ -67,6 +67,7 @@ const closePopup = function () {
 popup.addEventListener("click", closePopup);
 
 // Listener with intersection of hamburger and section
+// Probably not the best solution - need to gather more data
 
 const sectionHotelRooms = document.querySelector("#hotel-rooms");
 const sectionServices = document.querySelector("#services");
@@ -83,9 +84,7 @@ if (hamburger.classList.contains("active")) {
 }
 const checkIntersection = () => {
   const hamburgerRect = hamburger.getBoundingClientRect();
-  console.log(hamburgerRect);
   const sectionRect = sectionHotelRooms.getBoundingClientRect();
-  console.log(sectionRect);
 
   const isIntersecting = !(
     hamburgerRect.right < sectionRect.left ||
